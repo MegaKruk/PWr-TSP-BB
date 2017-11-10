@@ -1,0 +1,2 @@
+- uzupe³niæ o wiêcej plików pomiarowych 2 ATSP 2 STSP
+- macierz s¹siedztwa dynamicznie alokowana
