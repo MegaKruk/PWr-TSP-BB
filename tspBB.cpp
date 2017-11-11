@@ -1,17 +1,8 @@
-#include<stdlib.h>
-#include<string>
-#include<limits.h>
-#include<iostream>
-#include<fstream>
 #include "Stopwatch.h"
-
-const int noOfCities = 10;
-int calcPath[noOfCities + 1];
-int calcCost = INT_MAX;
-bool isNodeVisited[noOfCities];
+#include "tspBB.h"
 
 // znajduje najtañsz¹ krawêdz wierzcho³ka i
-int findFirstLowest(int adjacencyMatrix[noOfCities][noOfCities], int i) 
+int tspBB::findFirstLowest(int adjacencyMatrix[noOfCities][noOfCities], int i)
 {
 	int fistLowest = INT_MAX;
 	for (int k = 0; k < noOfCities; k++)
@@ -21,7 +12,7 @@ int findFirstLowest(int adjacencyMatrix[noOfCities][noOfCities], int i)
 }
 
 // znajduje drug¹ najtañsz¹ krawêdz wierzcho³ka i
-int findSecondLowest(int adjacencyMatrix[noOfCities][noOfCities], int i) 
+int tspBB::findSecondLowest(int adjacencyMatrix[noOfCities][noOfCities], int i)
 {
 	int firstLowest = INT_MAX, secondLowest = INT_MAX;
 	for (int j = 0; j < noOfCities; j++)
@@ -42,7 +33,7 @@ int findSecondLowest(int adjacencyMatrix[noOfCities][noOfCities], int i)
 }
 
 // zastêpuje najlepsze dotychczasowe rozwi¹zanie obecnym
-void currToBest(int currentPath[]) 
+void tspBB::currToBest(int currentPath[])
 {
 	for (int i = 0; i < noOfCities; i++)
 		calcPath[i] = currentPath[i];
@@ -50,7 +41,7 @@ void currToBest(int currentPath[])
 }
 
 // current bound to tutaj lower bound dla korzenia
-void recurrence(int adjacancyMatrix[noOfCities][noOfCities], int currentBound, int currentCost, int currentHeight, int currentPath[]) 
+void tspBB::recurrence(int adjacancyMatrix[noOfCities][noOfCities], int currentBound, int currentCost, int currentHeight, int currentPath[])
 {
 	// przypadek - odwiedziliœmy wszystkie wierzcho³ki po razie
 	if (currentHeight == noOfCities)
@@ -103,7 +94,7 @@ void recurrence(int adjacancyMatrix[noOfCities][noOfCities], int currentBound, i
 }
 
 // g³owna funkcja programu
-void TSP(int adjacancyMatrix[noOfCities][noOfCities])
+void tspBB::TSP(int adjacancyMatrix[noOfCities][noOfCities])
 {
 	int currentPath[noOfCities + 1];
 
@@ -129,20 +120,27 @@ void TSP(int adjacancyMatrix[noOfCities][noOfCities])
 }
 
 // testowanie jednej instancji algorytmu dla danych z gr17_d.txt w folderze z kodem
-void testAlgorithm(void)
+void tspBB::testAlgorithm(void)
 {
 	int adjacencyMatrix[noOfCities][noOfCities];
 
-	ifstream myFile("gr17_d.txt");
+	ifstream myFile("test.txt");
 	for (int i = 0; i < noOfCities; i++)
+	{
+		cout << "\n";
 		for (int j = 0; j < noOfCities; j++)
+		{
 			myFile >> adjacencyMatrix[i][j];
+			cout << adjacencyMatrix[i][j] << " ";
+		}
+
+	}
 
 	Stopwatch *timer = new Stopwatch();
 
 	timer->point1 = chrono::high_resolution_clock::now();
 	TSP(adjacencyMatrix);
-	cout << timer->countTimeDiff() << " nanosecs to complete this action\n";
+	cout << endl << timer->countTimeDiff() << " nanosecs to complete this action\n";
 	//cout << "Link: https://people.sc.fsu.edu/~jburkardt/datasets/tsp/tsp.html";
 	//cout << "\nGR17 is a set of 17 cities, from TSPLIB.\nThe minimal tour has length 2085.\n\n";
 	cout << "Calculated minimal cost: " << calcCost << endl;
@@ -152,7 +150,7 @@ void testAlgorithm(void)
 }
 
 // 100 pomiarów czasu oraz eksport pomiarów do pliku output.txt
-void makeMeasurements(void)
+void tspBB::makeMeasurements(void)
 {
 	int adjacencyMatrix[noOfCities][noOfCities];
 
@@ -164,40 +162,22 @@ void makeMeasurements(void)
 	Stopwatch *timer = new Stopwatch();
 	ofstream myOutput("output.txt");
 
-	for (int i = 0; i < 50; i++)
+	for (int i = 0; i < 51; i++)
 	{
 		timer->point1 = chrono::high_resolution_clock::now();
 		TSP(adjacencyMatrix);
+		if(i)
 		myOutput << timer->countTimeDiff() << "\t" << calcCost << endl;
 	}
 	cout << "Done";
 }
 
-int main()
+tspBB::tspBB()
 {
-	int option;
-	cout << "1 - Test algorithm\n2 - Make measurements\n";
-	cin >> option;
-	switch (option)
-	{
-	case 1:
-	{
-		testAlgorithm();
-		std::cin.ignore(2);
-		break;
-	}
-	case 2:
-	{
-		makeMeasurements();
-		std::cin.ignore(2);
-		break;
-	}
-	default:
-	{
-		cout << "Wrong input";
-		std::cin.ignore(2);
-		break;
-	}
-	}
-	return 0;
+
+}
+
+tspBB::~tspBB()
+{
+
 }

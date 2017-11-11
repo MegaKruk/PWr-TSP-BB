@@ -110,11 +110,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="Stopwatch.cpp" />
     <ClCompile Include="tspBB.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Stopwatch.h" />
+    <ClInclude Include="tspBB.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
