@@ -8,7 +8,7 @@
 class tspBB
 {
 private:
-	static const int noOfCities = 10;
+	static const int noOfCities = 17;
 
 public:
 	int calcPath[noOfCities + 1];
@@ -17,6 +17,8 @@ public:
 	int adjacencyMatrix[noOfCities][noOfCities];
 
 public:
+	tspBB();
+	~tspBB();
 	int findFirstLowest(int adjacencyMatrix[noOfCities][noOfCities], int i);
 	int findSecondLowest(int adjacencyMatrix[noOfCities][noOfCities], int i);
 	void currToBest(int currentPath[]);
@@ -24,7 +26,5 @@ public:
 	void TSP(int adjacancyMatrix[noOfCities][noOfCities]);
 	void testAlgorithm();
 	void makeMeasurements();
-	tspBB();
-	~tspBB();
 
 };

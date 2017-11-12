@@ -124,14 +124,14 @@ void tspBB::testAlgorithm(void)
 {
 	int adjacencyMatrix[noOfCities][noOfCities];
 
-	ifstream myFile("test.txt");
+	ifstream myFile("gr17_d.txt");
 	for (int i = 0; i < noOfCities; i++)
 	{
 		cout << "\n";
 		for (int j = 0; j < noOfCities; j++)
 		{
 			myFile >> adjacencyMatrix[i][j];
-			cout << adjacencyMatrix[i][j] << " ";
+			cout << adjacencyMatrix[i][j] << "\t";
 		}
 
 	}
@@ -144,9 +144,9 @@ void tspBB::testAlgorithm(void)
 	//cout << "Link: https://people.sc.fsu.edu/~jburkardt/datasets/tsp/tsp.html";
 	//cout << "\nGR17 is a set of 17 cities, from TSPLIB.\nThe minimal tour has length 2085.\n\n";
 	cout << "Calculated minimal cost: " << calcCost << endl;
-	cout << "Path: ";
+	cout << "Path:\t";
 	for (int i = 0; i <= noOfCities; i++)
-		cout << calcPath[i];
+		cout << calcPath[i] << "\t";
 }
 
 // 100 pomiarów czasu oraz eksport pomiarów do pliku output.txt
@@ -154,7 +154,7 @@ void tspBB::makeMeasurements(void)
 {
 	int adjacencyMatrix[noOfCities][noOfCities];
 
-	ifstream myFile("test.txt");
+	ifstream myFile("gr17_d.txt");
 	for (int i = 0; i < noOfCities; i++)
 		for (int j = 0; j < noOfCities; j++)
 			myFile >> adjacencyMatrix[i][j];
@@ -166,7 +166,6 @@ void tspBB::makeMeasurements(void)
 	{
 		timer->point1 = chrono::high_resolution_clock::now();
 		TSP(adjacencyMatrix);
-		if(i)
 		myOutput << timer->countTimeDiff() << "\t" << calcCost << endl;
 	}
 	cout << "Done";
